@@ -1,4 +1,5 @@
 import newsPosts from "../content/news/putonghua.json";
+import { competitorPosts } from "./competitor-posts";
 import type { CommunityEvent, Group, Resource, Story, Voice } from "./types";
 
 type StoredNewsPost = Story & { sourceUrls?: string[] };
@@ -230,7 +231,7 @@ const essays: Story[] = [
   },
 ];
 
-export const stories: Story[] = [...putonghuaNews, ...essays];
+export const stories: Story[] = [...putonghuaNews, ...essays, ...competitorPosts];
 
 export const events: CommunityEvent[] = [
   {
