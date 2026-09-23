@@ -49,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap"
           rel="stylesheet"
         />
+        <script src="https://analytics.ahrefs.com/analytics.js" data-key="XbSVRTEG/j0dCQtt/FNdTw" async />
       </head>
       <body>
         <a className="skip" href="#main">跳至主要內容</a>
