@@ -1,4 +1,11 @@
+import newsPosts from "../content/news/putonghua.json";
 import type { CommunityEvent, Group, Resource, Story, Voice } from "./types";
+
+type StoredNewsPost = Story & { sourceUrls?: string[] };
+
+export const putonghuaNews: Story[] = (newsPosts as StoredNewsPost[]).map(
+  ({ sourceUrls: _sourceUrls, ...story }) => story,
+);
 
 export const weeklyQuestion = {
   prompt: "你最近一次沒有趕時間的陪伴，是甚麼時候？",
@@ -38,7 +45,7 @@ export const voices: Voice[] = [
   },
 ];
 
-export const stories: Story[] = [
+const essays: Story[] = [
   {
     slug: "no-tutorial",
     title: "我們決定不補習的那一年",
@@ -222,6 +229,8 @@ export const stories: Story[] = [
     ],
   },
 ];
+
+export const stories: Story[] = [...putonghuaNews, ...essays];
 
 export const events: CommunityEvent[] = [
   {

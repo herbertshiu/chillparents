@@ -43,6 +43,18 @@ export default async function StoryPage({ params }: Props) {
           <span>約 {story.minutes} 分鐘</span>
         </p>
         {story.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+        {story.links && story.links.length > 0 ? (
+          <>
+            <h2>資料來源</h2>
+            <ul className="link-list">
+              {story.links.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : null}
         <div className="callout">
           <strong>聽定諗</strong>
           <p>如果這篇讓你想起自己的事，跟小組說的時候可以先講：你想別人聽，還是想一起想辦法。</p>

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "news": "node scripts/add-putonghua-news-post.mjs"
   },
   "dependencies": {
     "next": "^15.5.4",

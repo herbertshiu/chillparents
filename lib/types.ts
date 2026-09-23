@@ -21,6 +21,7 @@ export type Story = {
   wash: string;
   ink: string;
   body: string[];
+  links?: { label: string; href: string }[];
 };
 
 export type CommunityEvent = {

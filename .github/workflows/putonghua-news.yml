@@ -1,0 +1,38 @@
+name: Putonghua learning news
+
+on:
+  schedule:
+    # Monday 08:00 Hong Kong time
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Search public sources and write a post
+        run: node scripts/add-putonghua-news-post.mjs
+
+      - name: Open a pull request when a new post was written
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Add Putonghua learning news post"
+          title: "新增普通話學習消息"
+          body: |
+            這個自動程序從公開的政府新聞公報、香港電台新聞，以及香港政府搜尋，整理與學習普通話有關的標題和連結。
+
+            沒有轉載原文，也不推薦課程。若今次沒有新資料，就不會改動網站。
+          branch: automation/putonghua-news
+          base: main
+          add-paths: content/news/putonghua.json
+          delete-branch: true
