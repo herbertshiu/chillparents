@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { saveParent } from "@/app/join/actions";
 import { childAges, groups, joinRoles, joinTopics } from "@/lib/content";
 
 const INTRO_KEY = "chillparents.intro";
@@ -16,8 +17,8 @@ type Intro = {
   card: string;
 };
 
-export function JoinForm({ district, eventTitle }: { district?: string; eventTitle?: string }) {
-  const knownDistrict = groups.some((group) => group.district === district) ? district : "";
+export function JoinForm({ district, eventSlug, eventTitle }: { district?: string; eventSlug?: string; eventTitle?: string }) {
+  const knownDistrict = district && groups.some((group) => group.district === district) ? district : "";
   const [name, setName] = useState("");
   const [role, setRole] = useState<string>(joinRoles[0]);
   const [area, setArea] = useState(knownDistrict);
@@ -28,6 +29,7 @@ export function JoinForm({ district, eventTitle }: { district?: string; eventTit
   const [error, setError] = useState("");
   const [intro, setIntro] = useState<Intro | null>(null);
   const [copied, setCopied] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const raw = window.localStorage.getItem(INTRO_KEY);
@@ -45,31 +47,31 @@ export function JoinForm({ district, eventTitle }: { district?: string; eventTit
     setTopics((current) => current.includes(topic) ? current.filter((item) => item !== topic) : [...current, topic]);
   }
 
-  function onSubmit(event: FormEvent) {
+  async function onSubmit(event: FormEvent) {
     event.preventDefault();
-    if (!name.trim() || !area || !email.trim()) {
-      setError("請填寫稱呼、地區和電郵。");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      setError("電郵格式好像不完整。");
-      return;
-    }
-    if (topics.length === 0) {
-      setError("請至少選一個想傾的話題。");
-      return;
-    }
     if (!agreed) {
       setError("加入之前，請先同意社群守則。");
       return;
     }
-    const ageLine = age && age !== "不想說" ? `孩子大概是${age}。\n` : "";
-    const eventLine = eventTitle ? `我想先參加：${eventTitle}。\n` : "";
-    const card = `大家好，我是${name.trim()}，${role}，常在${area}。\n${ageLine}${eventLine}我想傾：${topics.join("、")}。\n我願意守 ChillParents 的約定：開口之前先問「你想我聽，定係想我一齊諗？」\n聯絡電郵：${email.trim()}`;
-    const next = { name: name.trim(), role, district: area, email: email.trim(), age, topics, card };
+    setSaving(true);
+    setError("");
+    const result = await saveParent({ name, role, district: area, email, age, topics, eventSlug });
+    setSaving(false);
+    if (!result.ok) {
+      setError(result.error);
+      return;
+    }
+    const next = {
+      name: result.parent.name,
+      role: result.parent.role,
+      district: result.parent.district,
+      email: result.parent.email,
+      age: result.parent.age,
+      topics: result.parent.topics,
+      card: result.parent.card,
+    };
     window.localStorage.setItem(INTRO_KEY, JSON.stringify(next));
     setIntro(next);
-    setError("");
     setCopied(false);
   }
 
@@ -106,7 +108,7 @@ export function JoinForm({ district, eventTitle }: { district?: string; eventTit
             <button className="btn btn-primary" type="button" onClick={copyCard}>{copied ? "已複製" : "複製介紹卡"}</button>
             <button className="btn btn-ghost" type="button" onClick={rewrite}>重新填寫</button>
           </div>
-          <p>介紹卡只留在這部裝置，沒有上傳到伺服器。第一次茶聚時出示，或複製給地區主持人即可。</p>
+          <p>資料已存入 ChillParents 資料庫，網站不會公開。這部裝置仍留著介紹卡，方便第一次茶聚時出示，或複製給地區主持人。</p>
         </section>
       ) : (
       <form className="form" onSubmit={onSubmit} noValidate>
@@ -153,8 +155,8 @@ export function JoinForm({ district, eventTitle }: { district?: string; eventTit
           我已讀並同意 <Link href="/guidelines">社群守則</Link>
         </label>
         {error ? <p className="form-error" role="alert">{error}</p> : null}
-        <button className="btn btn-primary" type="submit">產生自我介紹卡</button>
-        <p className="muted">電郵只寫在介紹卡上，方便你自己交給主持人。網站不會代為寄出，也不會轉給商業機構。</p>
+        <button className="btn btn-primary" type="submit" disabled={saving}>{saving ? "正在儲存…" : "產生自我介紹卡"}</button>
+        <p className="muted">稱呼、地區、電郵和話題會存入 ChillParents 資料庫，只供地區主持人聯絡。網站不會公開這些資料，也不會轉給商業機構。</p>
       </form>
       )}
     </div>

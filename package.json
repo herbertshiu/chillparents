@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "news": "node scripts/add-putonghua-news-post.mjs"
+    "news": "node scripts/add-putonghua-news-post.mjs",
+    "db:parents": "node scripts/create-parents-table.mjs"
   },
   "dependencies": {
+    "@libsql/client": "^0.18.0",
     "next": "^15.5.4",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"

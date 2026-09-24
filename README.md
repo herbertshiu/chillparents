@@ -10,7 +10,7 @@
 - 地區小組
 - 資源：小一入學筆記、社區支援、主持人手冊、求助熱線、低消費週末
 - 關於、社群守則
-- 加入：產生一張茶聚自我介紹卡，資料留在瀏覽器，不上傳
+- 加入：產生一張茶聚自我介紹卡，並把家長資料存入 Turso 資料庫 `chillparents` 的 `parents` 表。網站不會公開這些資料。
 
 ## 普通話學習消息
 
@@ -20,6 +20,16 @@
 
 ```bash
 npm run news
+```
+
+## 家長資料庫
+
+加入頁使用環境變數 `TURSO_DATABASE_URL` 和 `TURSO_AUTH_TOKEN` 連到名為 `chillparents` 的 Turso 資料庫。兩個變數都要設在 Vercel，不要加 `NEXT_PUBLIC_` 前綴。
+
+第一次有人提交加入表，或執行下面的指令，會建立 `parents` 表：
+
+```bash
+npm run db:parents
 ```
 
 ## 本地運行

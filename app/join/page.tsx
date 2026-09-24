@@ -18,7 +18,7 @@ export default async function JoinPage({ searchParams }: { searchParams: Promise
       <PageHeader
         kicker="加入"
         title="先寫一張可以遞出去的自我介紹。"
-        lede="不用填長表格等審批。介紹卡會留在你的瀏覽器，方便第一次茶聚時使用。"
+        lede="不用填長表格等審批。你提交的資料會存入 ChillParents 資料庫，網站不會公開。"
         crumb={<><Link href="/">首頁</Link> / 加入</>}
       />
       <div className="wrap section article">
@@ -29,7 +29,7 @@ export default async function JoinPage({ searchParams }: { searchParams: Promise
           <p>3. 若你想主持，從北區或主持人手冊開始。</p>
           <p style={{ marginTop: "0.8rem" }}><Link href="/guidelines">加入前請讀守則</Link></p>
         </aside>
-        <JoinForm district={district} eventTitle={eventTitle} />
+        <JoinForm district={district} eventSlug={event} eventTitle={eventTitle} />
       </div>
     </>
   );
