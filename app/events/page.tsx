@@ -4,10 +4,11 @@ import { EventExplorer } from "@/components/EventExplorer";
 import { PageHeader } from "@/components/PageHeader";
 import { events } from "@/lib/content";
 import { hongKongTodayISO } from "@/lib/format";
+import { seoDescription, seoTitle } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "活動",
-  description: "ChillParents 的茶聚、野餐、圖書館靜讀和網上練習。名額小，不做推銷。",
+  title: { absolute: seoTitle("活動") },
+  description: seoDescription("ChillParents 的茶聚、野餐、圖書館靜讀和網上練習，名額小，不做推銷"),
 };
 
 export default function EventsPage() {

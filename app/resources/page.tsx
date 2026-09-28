@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
 import { resources } from "@/lib/content";
+import { seoDescription, seoTitle } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "資源",
-  description: "小一入學筆記、社區支援、低消費週末，以及照顧者求助熱線。",
+  title: { absolute: seoTitle("資源") },
+  description: seoDescription("小一入學筆記、社區支援、低消費週末，以及照顧者求助熱線"),
 };
 
 export default function ResourcesPage() {

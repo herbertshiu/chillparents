@@ -5,6 +5,7 @@ import { SaveStory } from "@/components/SaveStory";
 import { StoryCard } from "@/components/StoryCard";
 import { getStory, relatedStories, stories } from "@/lib/content";
 import { formatDate } from "@/lib/format";
+import { seoDescription, seoTitle } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -15,8 +16,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const story = getStory(slug);
-  if (!story) return { title: "找不到故事" };
-  return { title: story.title, description: story.excerpt };
+  if (!story) return { title: { absolute: seoTitle("找不到故事") } };
+  return { title: { absolute: seoTitle(story.title) }, description: seoDescription(story.excerpt) };
 }
 
 export default async function StoryPage({ params }: Props) {

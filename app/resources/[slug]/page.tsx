@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getResource, resources } from "@/lib/content";
+import { seoDescription, seoTitle } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -12,8 +13,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const resource = getResource(slug);
-  if (!resource) return { title: "找不到資源" };
-  return { title: resource.title, description: resource.summary };
+  if (!resource) return { title: { absolute: seoTitle("找不到資源") } };
+  return { title: { absolute: seoTitle(resource.title) }, description: seoDescription(resource.summary) };
 }
 
 export default async function ResourcePage({ params }: Props) {

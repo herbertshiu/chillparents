@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { events, getEvent } from "@/lib/content";
 import { eventDateParts, formatDate, hongKongTodayISO } from "@/lib/format";
+import { seoDescription, seoTitle } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -13,8 +14,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const event = getEvent(slug);
-  if (!event) return { title: "找不到活動" };
-  return { title: event.title, description: event.summary };
+  if (!event) return { title: { absolute: seoTitle("找不到活動") } };
+  return { title: { absolute: seoTitle(event.title) }, description: seoDescription(event.summary) };
 }
 
 export default async function EventPage({ params }: Props) {

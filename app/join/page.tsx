@@ -3,10 +3,11 @@ import Link from "next/link";
 import { JoinForm } from "@/components/JoinForm";
 import { PageHeader } from "@/components/PageHeader";
 import { getEvent } from "@/lib/content";
+import { seoDescription, seoTitle } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "加入社群",
-  description: "寫一張 ChillParents 茶聚自我介紹卡，選擇地區，帶著守則去第一次聚會。",
+  title: { absolute: seoTitle("加入社群") },
+  description: seoDescription("寫一張 ChillParents 茶聚自我介紹卡，選擇地區，帶著守則去第一次聚會"),
 };
 
 export default async function JoinPage({ searchParams }: { searchParams: Promise<{ district?: string; event?: string }> }) {

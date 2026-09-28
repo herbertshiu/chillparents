@@ -1,25 +1,28 @@
 import type { Metadata, Viewport } from "next";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { seoDescription, seoTitle, SITE_ORIGIN } from "@/lib/seo";
 import "./globals.css";
 
-const description = "ChillParents 輕鬆爸媽是香港家長社群。少比較、多陪伴，按地區結伴。開口之前先問：你想我聽，定係想我一齊諗？";
+const title = seoTitle("輕鬆爸媽");
+const description = seoDescription("ChillParents 輕鬆爸媽是香港家長社群，少比較、多陪伴，按地區結伴");
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://chillparents.hk"),
+  metadataBase: new URL(SITE_ORIGIN),
   title: {
-    default: "ChillParents 輕鬆爸媽｜香港家長社群",
+    default: title,
     template: "%s｜ChillParents 輕鬆爸媽",
   },
   description,
+  alternates: { canonical: "./" },
   applicationName: "ChillParents",
   keywords: ["香港家長", "親子", "家長社群", "輕鬆爸媽", "ChillParents"],
   openGraph: {
-    title: "ChillParents 輕鬆爸媽｜香港家長社群",
+    title,
     description,
     locale: "zh_HK",
     type: "website",
-    url: "https://chillparents.hk",
+    url: SITE_ORIGIN,
   },
 };
 
@@ -33,7 +36,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "ChillParents 輕鬆爸媽",
-  url: "https://chillparents.hk",
+  url: SITE_ORIGIN,
   description,
   areaServed: "HK",
   inLanguage: "zh-Hant",

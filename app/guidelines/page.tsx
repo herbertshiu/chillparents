@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
 import { guidelines } from "@/lib/content";
+import { seoDescription, seoTitle } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "社群守則",
-  description: "ChillParents 的約定：保護孩子私隱、先問聽定諗、禁止硬銷、不做診斷。",
+  title: { absolute: seoTitle("社群守則") },
+  description: seoDescription("ChillParents 的約定：保護孩子私隱、先問聽定諗、禁止硬銷、不做診斷"),
 };
 
 export default function GuidelinesPage() {

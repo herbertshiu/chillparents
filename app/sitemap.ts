@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { events, resources, stories } from "@/lib/content";
+import { SITE_ORIGIN } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://chillparents.hk";
+  const base = SITE_ORIGIN;
   const staticRoutes = ["", "/stories", "/events", "/groups", "/resources", "/about", "/guidelines", "/join"];
   return [
     ...staticRoutes.map((route) => ({ url: `${base}${route}`, lastModified: new Date("2026-09-23") })),

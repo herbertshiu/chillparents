@@ -3,10 +3,11 @@ import Link from "next/link";
 import { GroupExplorer } from "@/components/GroupExplorer";
 import { PageHeader } from "@/components/PageHeader";
 import { groups } from "@/lib/content";
+import { seoDescription, seoTitle } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "地區小組",
-  description: "ChillParents 覆蓋香港十八區。先找你住的區，再決定要不要出現。",
+  title: { absolute: seoTitle("地區小組") },
+  description: seoDescription("ChillParents 覆蓋香港十八區。先找你住的區，再決定要不要出現"),
 };
 
 export default async function GroupsPage({ searchParams }: { searchParams: Promise<{ region?: string }> }) {

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
+import { seoDescription, seoTitle } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "關於我們",
-  description: "ChillParents 輕鬆爸媽為何出現：一個少比較、先傾聽的香港家長社群。",
+  title: { absolute: seoTitle("關於我們") },
+  description: seoDescription("ChillParents 輕鬆爸媽為何出現：一個少比較、先傾聽的香港家長社群"),
 };
 
 export default function AboutPage() {
