@@ -246,7 +246,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.25;
   grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  margin: 0.5rem 0 1rem;
+  margin-block: 0.5rem 1rem;
 }
 
 .stat { padding: 1.1rem 1rem 1.1rem 0; }
