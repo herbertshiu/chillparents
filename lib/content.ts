@@ -325,7 +325,7 @@ const essays: Story[] = [
     author: "ChillParents 編輯",
     role: "編輯札記",
     district: "全港",
-    date: "2026-10-09",
+    date: "2026-10-10",
     minutes: 5,
     mark: "家",
     wash: "#efe2d4",
